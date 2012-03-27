@@ -1,0 +1,5 @@
+[000]
+beforeWait=1
+idleTimeout=60
+requestCommand=*ic;$num;
+responseRegex=ic;ok

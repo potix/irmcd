@@ -1,0 +1,174 @@
+% PREFIX
+かみさま      k a m i s a m a
+
+% START
+お願い        o n e g a i
+頼む          t a n o m u
+起きて        o k i t e
+
+% END
+ありがとう    a r i g a t o u
+ありがとう    a r i g a t o
+グッジョブ    g  u j j o b u
+サンキュー    s a n ky u u
+サンキュー    s a n ky u
+
+% LEARN
+学習          g a k u sh u u
+学習          g a k u sh u
+
+% LEARN_ACTION
+キャンセル    ky a n s e r u
+1             i ch i 
+2             n i 
+3             s a n
+4             y o n
+5             g o
+6             r o k u
+7             n a n a
+8             h a ch i
+9             ky u u
+10            j u u
+11            j u u i ch i
+12            j u u n i
+13            j u u s a n
+14            j u u y o n
+15            j u u g o
+16            j u u r o k u
+17            j u u n a n a
+18            j u u h a ch i
+19            j u u ky u u
+20            n i j u u
+21            n i j u u i ch i
+22            n i j u u n i
+23            n i j u u s a n
+24            n i j u u y o n
+25            n i j u u g o
+26            n i j u u r o k u
+27            n i j u u n a n a
+28            n i j u u h a ch i
+29            n i j u u ky u u
+30            s a n j u u 
+31            s a n j u u i ch i
+32            s a n j u u n i
+33            s a n j u u s a n
+34            s a n j u u y o n
+35            s a n j u u g o
+36            s a n j u u r o k u
+37            s a n j u u n a n a
+38            s a n j u u h a ch i
+39            s a n j u u ky u u 
+40            y o n j u u 
+41            y o n j u u i ch i
+42            y o n j u u n i
+43            y o n j u u s a n
+44            y o n j u u y o n
+45            y o n j u u g o
+46            y o n j u u r o k u
+47            y o n j u u n a n a
+48            y o n j u u h a ch i
+49            y o n j u u ky u u
+50            g o j u u 
+
+% SHORTCUT
+よしなに      y o s i n a n i
+
+% TARGET
+テレビ        t e r e b i
+電気          d e n k i
+DVDプレイヤー d i b u i d i p u r e i y a
+DVDプレイヤー d i i b u i d i i p u r e i y a a
+CDプレイヤー  s i i d i i p u r e i y a a
+CDプレイヤー  s i d i p u r e i y a a
+テレパソ      t e r e p a s o
+天気          t e n k i
+
+% NO
+の            n o
+
+% WO
+を            w o
+
+%ITEM
+チャンネル    ch a n n e r u
+入力          ny u ry o k u
+音量          o n ry o u
+CD            s i i d i i
+天気          t e n k i
+
+% ONOFF_ACTION
+付けて        t u k e t e
+消して        k e s i t e
+教えて        o s i e t e
+
+% ACTION
+再生          s a i s e i
+再生して      s a i s e i s i t e
+停止          t e i s i
+止めて        t o m e t e
+がっつり上げて g a t t u r i a g e t e
+上げて        a g e t e
+がっつり下げて g a t t u r i s a g e t e
+下げて        s a g e t e
+切り替え      k i r i k a e
+次            t u g i
+前            m a e
+1             i ch i 
+2             n i 
+3             s a n
+4             y o n
+5             g o
+6             r o k u
+7             n a n a
+8             h a ch i
+9             ky u u
+10            j u u
+11            j u u i ch i
+12            j u u n i
+13            j u u s a n
+14            j u u y o n
+15            j u u g o
+16            j u u r o k u
+17            j u u n a n a
+18            j u u h a ch i
+19            j u u ky u u
+20            n i j u u
+21            n i j u u i ch i
+22            n i j u u n i
+23            n i j u u s a n
+24            n i j u u y o n
+25            n i j u u g o
+26            n i j u u r o k u
+27            n i j u u n a n a
+28            n i j u u h a ch i
+29            n i j u u ky u u
+30            s a n j u u 
+31            s a n j u u i ch i
+32            s a n j u u n i
+33            s a n j u u s a n
+34            s a n j u u y o n
+35            s a n j u u g o
+36            s a n j u u r o k u
+37            s a n j u u n a n a
+38            s a n j u u h a ch i
+39            s a n j u u ky u u 
+40            y o n j u u 
+41            y o n j u u i ch i
+42            y o n j u u n i
+43            y o n j u u s a n
+44            y o n j u u y o n
+45            y o n j u u g o
+46            y o n j u u r o k u
+47            y o n j u u n a n a
+48            y o n j u u h a ch i
+49            y o n j u u ky u u
+50            g o j u u 
+
+% NOISE
+_             sp
+
+% NS_B
+'             silB
+
+% NS_E
+'             silE

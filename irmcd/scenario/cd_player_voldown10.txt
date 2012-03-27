@@ -1,0 +1,7 @@
+[000]
+periodicInterval=1
+repeatCount=10
+requestCommand=*is;44;
+responseRegex=is;ok
+expectRegex=dummy
+ignoreError=true

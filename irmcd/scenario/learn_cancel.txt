@@ -1,0 +1,3 @@
+[000]
+requestCommand=*cc
+responseRegex=cc;ok

@@ -1,0 +1,3 @@
+[000]
+requestCommand=*is;2;
+responseRegex=is;ok

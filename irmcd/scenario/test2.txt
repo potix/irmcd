@@ -1,0 +1,3 @@
+[ 000 ]
+requestCommand=*au
+responseRegex=okk

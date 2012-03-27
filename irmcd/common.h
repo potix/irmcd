@@ -1,0 +1,7 @@
+#ifndef COMMON_H
+#define COMMON_H
+
+#define CONFIG_SECTION_GLOBAL_SETTING "GLOBAL_SETTING"
+
+
+#endif

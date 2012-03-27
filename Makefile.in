@@ -1,0 +1,7 @@
+all:
+	cd irmcd && $(MAKE)
+clean:
+	cd irmcd && $(MAKE) clean
+.PHONY: am--refresh
+am--refresh:
+	@:
