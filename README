@@ -53,11 +53,10 @@ iremocon制御デーモン
     自分好みに変更して使ってください
     juliusが送ってくるメッセージがスクリプト実行のパラメータに使われるので、
     irmcs.vocaの以下の部分は変更しないことを推奨します。
-    % NS_B
-    '             silB
-    % NS_E
-    '             silE
-
+      % NS_B
+      '             silB
+      % NS_E
+      '             silE
  - julius_script
    juliusの実行ファイルです。
    自分の環境に合わせて変更して使ってください
