@@ -14,6 +14,8 @@ iremocon制御デーモン
 
   voice               text             command
   -------> | julius | ------> |irmcd | -------> iremocon
+               plugin:
+                - irmcd_notify
 
 * ファイル
   grammar/       : サンプルとしてjuliusの文法定義を書いているファイルです
@@ -55,6 +57,7 @@ iremocon制御デーモン
     '             silB
     % NS_E
     '             silE
+
  - julius_script
    juliusの実行ファイルです。
    自分の環境に合わせて変更して使ってください
@@ -106,8 +109,8 @@ iremocon制御デーモン
    connectPort=51013                      : ポート番号は51013です
    newLine=CRLF                           : 改行コードにはCFLFかLFを指定できます
    executeScript=/root/voice/voice.sh もう知ってた
-             : この例の場合以下のコマンドが実行されます
-             : voice.sh もう知ってた success  かみさま学習キャンセル lean_cacel 000
+           : この例の場合以下のコマンドが実行されます
+           :   voice.sh もう知ってた success  かみさま学習キャンセル lean_cacel 000
 
    正規表現の後方参照の例
    [learn]
