@@ -1,1 +1,198 @@
-TODO
+iremocon制御デーモン
+
+* はじめに
+  主に、iremoconを制御するために作りました。
+  telnetのような通信であればiremocon以外も制御可能です。
+  また、juliusプラグインを使いjuliusと通信をする事で
+  音声認識による制御が可能です
+  irmcdは任意のテキストを受けた場合にコントローラーを
+  アクティブにし、その後iremocon等へコマンドを送るようになります。
+  コントローラーがアクティブでないときは何もしません。
+  また、コマンドはシナリオファイルよりある程度柔軟に記述できます。
+
+* アーキテクチャ
+
+  voice               text             command
+  -------> | julius | ------> |irmcd | -------> iremocon
+
+* ファイル
+  grammar/       : サンプルとしてjuliusの文法定義を書いているファイルです
+  julius_script/ : サンプルとしてjuliusの起動スクリプトを置いています
+  irmcd/         : irmcd本体
+  irmcd_notify   : juliusのプラグイン
+
+* 設定ファイル
+  - irmcd:
+    以下の2つの設定系があります。
+    - irmcd.conf
+      irmcdの基本的な動作や、受信したテキストメッセージから
+      どのシナリオやスクリプトを実行するかを決定します。
+    - scenario
+      iremoconと通信するシナリオを記述します。
+  - irmcd_notify
+    - irmcd_notify.conf
+      irmcd_notifyの動作を設定します。
+      julius実行前にIRMCD_NOTIFY_CONFIG_FILE環境変数で
+      設定ファイルを指定する事で読み込まれます。
+
+* インストール方法
+ - irmcd
+    # ./configure
+    # make
+    # make install
+ - irmcd_notify
+    irmcdと一緒には作られないので、手動でmakeして適切な
+    juliusプラグインディレクトリへコピーしてください
+    # cd irmcd_notify
+    # make
+    # copy irmcd_notify <julius plugin dir>
+ - grammer
+    juliusのgrammerファイルです
+    自分好みに変更して使ってください
+    juliusが送ってくるメッセージがスクリプト実行のパラメータに使われるので、
+    irmcs.vocaの以下の部分は変更しないことを推奨します。
+    % NS_B
+    '             silB
+    % NS_E
+    '             silE
+ - julius_script
+   juliusの実行ファイルです。
+   自分の環境に合わせて変更して使ってください
+
+* irmcd.conf 設定内容
+ - GLOBAL_SETTINGはirmcdの基本的な動作を設定します
+   [GLOBAL_SETTING]
+   #foreground=fase            : foregroundで動かすかどうか
+   #pidFile=/var/run/irmd.pid  : プロセスIDファイル指定
+   #bindAddr=                  : バインドするアドレスの指定無指定はワイルドカード
+   #bindPort=10023             : バインドするポートの指定
+   #logType=syslog             : ログを出力する先 syslog | file
+   #logPath=/var/log/irmcd.log : fileを指定した場合のログの出力先
+
+ - それ以外のセクションは受け付けるテキストとそれに対して何をするかを書きます
+   名前が重複しないようにしてください。
+
+   コントローラーをアクティブにする例
+   [start]
+   messageRegex=かみさま[ _]*(?:お願い|起きて) : 受信するテキストを正規表現で指定
+   controllerActive=true                       : コントローラーをアクティブにするか
+                                               : アクティブでないとテキストを受けても
+                                               : 何もしません
+   executeScript=/root/voice/voice.sh 呼んだ？ : 受付が成功した場合にに実行するスクリプト
+                                               : を書きます。
+                                               : 実際には、他に引数として以下の4つの値が渡されます
+                                               :   - result ( success もしくは fail )
+                                               :   - request ( 受け付けたtext )
+                                               :   - section ( 受け付けたtestのセクション名 )
+                                               :   - lastcmd ( 最後に実行したコマンドのセクション名
+                                               :                何もコマンドを実行していない場合は無い )
+                                               : この例の場合以下のコマンドが実行されます
+                                               :   voice.sh 呼んだ？ success  かみさまお願い start
+
+   コントローラーを非アクティブにする例
+   [end]
+   messageRegex=かみさま[ _]*(?:サンキュー|ありがとう|グッジョブ)
+   controllerActive=false
+   executeScript=/root/voice/voice.sh 利用しやがって！
+
+   シナリオファイルを指定した場合の例
+   [learn_cancel]
+   messageRegex=かみさま[ _]*学習[ _]*キャンセル
+   controllerActive=true                           : コントローラーをアクティブにしつつ
+                                                     コマンドの実行も可能です
+   scenarioFile=scenario/learn_cancel.txt          : コマンドのシナリオファイルを指定します
+   connectAddr=192.168.150.15                      : 192.168.150.15に接続します
+   connectPort=51013                               : ポート番号は51013です
+   newLine=CRLF                                    : 改行コードにはCFLFかLFを指定できます
+   executeScript=/root/voice/voice.sh もう知ってた : この例の場合以下のコマンドが実行されます
+                                                   :   voice.sh もう知ってた success  かみさま学習キャンセル lean_cacel 000
+
+   正規表現の後方参照の例
+   [learn]
+   messageRegex=かみさま[ _]*学習[ _]*([[:digit:]]{1,4})
+   controllerActive=true
+   variablesName=$entire,$num      : 正規表現のグルーピングをscenarioで後方参照できます
+                                   : デフォルトでは$0,...,$5 で利用できます
+                                   : これらの名前を変更する事ができます
+                                   : この例では以下のように名前を置き換えています
+                                   :   $0が$entire (テキスト全体が$0に入るので注意)
+                                   :   $1が$num ([[:digit:]]{1,4})
+   scenarioFile=scenario/learn.txt
+   connectAddr=192.168.150.15
+   connectPort=51013
+   newLine=CRLF
+   executeScript=/root/voice/voice.sh 早く教えろ
+
+* シナリオファイルの内容
+  - シナリオファイルはコマンドのリクエストとレスポンスを書きます
+    セクション名は任意ですが、重複しないようにしてください。
+
+    典型的なコマンド送信例
+    [000]
+    requestCommand=*is;40; : *is;40;という文字列を送ります
+    responseRegex=is;ok    : is;okという文字列が帰ってくる事を期待します
+                           : もし、違う文字列が帰ってきた場合は、エラーとなりそこで
+                           : コマンドの送信を終了してresultにfailを返します
+
+    違う文字列が帰ってきても続行する例
+    [000]
+    requestCommand=*is;40;
+    responseRegex=is;ok
+    ignoreError=true       : エラーを無視します
+
+    コマンド実行前のwaitを制御する例
+    [000]
+    beforeWait=0             : waitを入れずにコマンドを実行します。
+                             : デフォルトでは必ず1秒のwaitが入るようになっています
+                             : この値を変更することで実行前のwaitを制御できます
+                             : 0 - 60 が入力可能
+    requestCommand=*ic;$num; : $numが前述した入力テキスト正規表現で一致した
+                             : グルーピング部分に置き換わります
+                             : この例では *ic;40; などに変換されます
+    responseRegex=ic;ok
+
+
+    複数のコマンドを実行する例
+    [000]
+    requestCommand=*is;40;
+    responseRegex=is;ok
+    [001]                   : このように複数のセクションを書くと
+                            : 上から順に実行されます
+    requestCommand=*is;41;
+    responseRegex=is;ok
+
+    タイムアウト時間を延ばす 例
+    [000]
+    beforeWait=1
+    idleTimeout=60          : idletimeoutの時間を指定できます
+                            : デフォルトは120秒でタイムアウトします
+                            : タイムアウトした場合はエラーとなります
+    requestCommand=*ic;$num;
+    responseRegex=ic;ok
+
+    ある文字列が帰ってくるまで、任意のコマンドを投げ続ける（難易度高い)
+    [000]
+    periodicInterval=1     : 1秒間隔でコマンドの送信を行う
+                           : 1-120を指定可能
+                           : デフォルトは60
+    repeatCount=10         : 最大10回繰り返す
+                           : 0 - 100を指定可能
+                           : デフォルトは0 (リピートしない)
+    requestCommand=*au;
+    responseRegex=ok
+    expectRegex=ic:ok;     : 繰り返す間に送られくる事を期待する文字列
+                           : この文字列がこない場合はエラーになります
+
+    任意のコマンドを繰り返し実行する処理を１セクションで書く（応用)
+    [000]
+    periodicInterval=1
+    repeatCount=10
+    requestCommand=*is;44;
+    responseRegex=is;ok
+    expectRegex=dummy      : ダミーの期待する文字列を指定しておき
+    ignoreError=true       : エラーを無視する
+                           : こうすると1秒ごとに10回コマンド繰り返します
+                           : これの問題は繰り返しの最中にエラーが発生した場合も
+                           : 無視されるというところです
+
+
