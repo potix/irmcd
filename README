@@ -195,4 +195,9 @@ iremocon制御デーモン
                            : これの問題は繰り返しの最中にエラーが発生した場合も
                            : 無視されるというところです
 
+* irmcd_notify.conf の設定内容
+  - SETTINGセクションに書いてください
 
+   [SETTING]
+   connectAddr=127.0.0.1   : irmcdデーモンがバインドしているアドレスを指定
+   connectPort=10023       : irmcdデーモンがバインドしているポートを指定
