@@ -78,16 +78,17 @@ iremocon制御デーモン
    controllerActive=true                       : コントローラーをアクティブにするか
                                                : アクティブでないとテキストを受けても
                                                : 何もしません
-   executeScript=/root/voice/voice.sh 呼んだ？ : 受付が成功した場合にに実行するスクリプト
-                                               : を書きます。
-                                               : 実際には、他に引数として以下の4つの値が渡されます
-                                               :   - result ( success もしくは fail )
-                                               :   - request ( 受け付けたtext )
-                                               :   - section ( 受け付けたtestのセクション名 )
-                                               :   - lastcmd ( 最後に実行したコマンドのセクション名
-                                               :                何もコマンドを実行していない場合は無い )
-                                               : この例の場合以下のコマンドが実行されます
-                                               :   voice.sh 呼んだ？ success  かみさまお願い start
+   executeScript=/root/voice/voice.sh 呼んだ？
+                         : 受付が成功した場合にに実行するスクリプト
+                         : を書きます。
+                         : 実際には、他に引数として以下の4つの値が渡されます
+                         :   - result ( success もしくは fail )
+                         :   - request ( 受け付けたtext )
+                         :   - section ( 受け付けたtestのセクション名 )
+                         :   - lastcmd ( 最後に実行したコマンドのセクション名
+                         :                何もコマンドを実行していない場合は無い )
+                         : この例の場合以下のコマンドが実行されます
+                         :   voice.sh 呼んだ？ success  かみさまお願い start
 
    コントローラーを非アクティブにする例
    [end]
@@ -98,25 +99,26 @@ iremocon制御デーモン
    シナリオファイルを指定した場合の例
    [learn_cancel]
    messageRegex=かみさま[ _]*学習[ _]*キャンセル
-   controllerActive=true                           : コントローラーをアクティブにしつつ
-                                                     コマンドの実行も可能です
-   scenarioFile=scenario/learn_cancel.txt          : コマンドのシナリオファイルを指定します
-   connectAddr=192.168.150.15                      : 192.168.150.15に接続します
-   connectPort=51013                               : ポート番号は51013です
-   newLine=CRLF                                    : 改行コードにはCFLFかLFを指定できます
-   executeScript=/root/voice/voice.sh もう知ってた : この例の場合以下のコマンドが実行されます
-                                                   :   voice.sh もう知ってた success  かみさま学習キャンセル lean_cacel 000
+   controllerActive=true                  : コントローラーをアクティブにしつつ
+                                          : コマンドの実行も可能です
+   scenarioFile=scenario/learn_cancel.txt : シナリオファイルを指定します
+   connectAddr=192.168.150.15             : 192.168.150.15に接続します
+   connectPort=51013                      : ポート番号は51013です
+   newLine=CRLF                           : 改行コードにはCFLFかLFを指定できます
+   executeScript=/root/voice/voice.sh もう知ってた
+             : この例の場合以下のコマンドが実行されます
+             : voice.sh もう知ってた success  かみさま学習キャンセル lean_cacel 000
 
    正規表現の後方参照の例
    [learn]
    messageRegex=かみさま[ _]*学習[ _]*([[:digit:]]{1,4})
    controllerActive=true
-   variablesName=$entire,$num      : 正規表現のグルーピングをscenarioで後方参照できます
-                                   : デフォルトでは$0,...,$5 で利用できます
-                                   : これらの名前を変更する事ができます
-                                   : この例では以下のように名前を置き換えています
-                                   :   $0が$entire (テキスト全体が$0に入るので注意)
-                                   :   $1が$num ([[:digit:]]{1,4})
+   variablesName=$entire,$num : 正規表現のグルーピングをscenarioで後方参照できます
+                              : デフォルトでは$0,...,$5 で利用できます
+                              : これらの名前を変更する事ができます
+                              : この例では以下のように名前を置き換えています
+                              :   $0が$entire (テキスト全体が$0に入るので注意)
+                              :   $1が$num ([[:digit:]]{1,4})
    scenarioFile=scenario/learn.txt
    connectAddr=192.168.150.15
    connectPort=51013
