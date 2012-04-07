@@ -21,7 +21,7 @@ iremocon制御デーモン
   grammar/       : サンプルとしてjuliusの文法定義を書いているファイルです
   julius_script/ : サンプルとしてjuliusの起動スクリプトを置いています
   irmcd/         : irmcd本体
-  irmcd_notify   : juliusのプラグイン
+  irmcd_notify/  : juliusのプラグイン
 
 * 設定ファイル
   - irmcd:
